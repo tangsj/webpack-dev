@@ -48,11 +48,6 @@ var config =  {
         loader: 'babel-loader'
       },
       {
-        test: /\.css$/,
-        // loader: ExtractTextPlugin.extract('css-loader!postcss-loader') // style-loader
-        loaders: [ 'style-loader', 'css-loader', 'postcss-loader' ]
-      },
-      {
         test: /\.(jpg|png|gif)$/i,
         loader: 'url?limit=4096&name=images/[hash:8].[name].[ext]'
       }
@@ -82,12 +77,11 @@ var config =  {
     ];
   },
   plugins: [
-    new ExtractTextPlugin('css/[contenthash:8].[name].css'),
     new webpack.ProvidePlugin({
       $: 'jquery'
     }),
     new HtmlWebpackPlugin({
-      title: 'Webapck 开发模板',
+      title: '万达问卷调查',
       inject: 'body',
       template: 'index.html',
       minify: {
@@ -99,9 +93,21 @@ var config =  {
   ]
 }
 
-// 生产环境定义
-if(env == 'production'){
-  var productPlugins = [
+if(isDev){ // 开发环境定义
+  config.devtool = 'source-map';
+  config.module.loaders.push({
+    test: /\.css$/,
+    // 在开发模式下使用 sytle 标签引用样式可以实现样式的热更新
+    loaders: [ 'style-loader', 'css-loader', 'postcss-loader' ]
+  });
+}else{
+  config.module.loaders.push({
+    test: /\.css$/,
+    // 在生产环境中，css提取为独立的文件 利用浏览器并发
+    loader: ExtractTextPlugin.extract('css-loader!postcss-loader') // style-loader
+  });
+  const productPlugins = [
+    new ExtractTextPlugin('css/[contenthash:8].[name].css'),
     new webpack.NoErrorsPlugin(),
     new CleanWebpackPlugin(['build']),
     new uglifyJsPlugin({
@@ -113,8 +119,6 @@ if(env == 'production'){
     new webpack.BannerPlugin('author : codecook; mail: t_fate@163.com')
   ];
   config.plugins = config.plugins.concat(productPlugins);
-}else{
-  config.devtool = 'source-map';
 }
 
 module.exports = config;
