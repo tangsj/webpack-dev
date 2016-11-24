@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development cross-env MODE=http://192.168.1.110:8080 webpack-dev-server --progress --colors --inline --hot",
-    "build": "cross-env NODE_ENV=production cross-env MODE=http://192.168.1.110:8000/test/_webpack/build webpack --progerss --profile --colors"
+    "dev": "cross-env NODE_ENV=development cross-env MODE=http://192.168.3.7:8080 webpack-dev-server --progress --colors --inline --hot",
+    "build": "cross-env NODE_ENV=production cross-env MODE=http://192.168.3.7:8000 webpack --progerss --profile --colors"
   },
   "author": "tangsj",
   "license": "MIT",
@@ -23,7 +23,9 @@
     "css-mqpacker": "^5.0.1",
     "csswring": "^5.1.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",
+    "html-withimg-loader": "^0.1.16",
     "object-assign": "^4.1.0",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.13.0",

@@ -50,6 +50,10 @@ var config =  {
       {
         test: /\.(jpg|png|gif)$/i,
         loader: 'url?limit=4096&name=images/[hash:8].[name].[ext]'
+      },
+      {
+        test: /\.(htm|html)$/i,
+        loader: 'html-withimg-loader'
       }
     ]
   },
@@ -81,9 +85,10 @@ var config =  {
       $: 'jquery'
     }),
     new HtmlWebpackPlugin({
-      title: '万达问卷调查',
+      title: 'webpack-dev',
       inject: 'body',
-      template: 'index.html',
+      template: 'html-withimg-loader!index.html',
+      filename: 'index.html',
       minify: {
         removeComments: isDev ? false : true,
         collapseWhitespace: true,
