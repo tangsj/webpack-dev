@@ -85,10 +85,8 @@ var config =  {
       $: 'jquery'
     }),
     new HtmlWebpackPlugin({
-      title: 'webpack-dev',
       inject: 'body',
       template: 'html-withimg-loader!index.html',
-      filename: 'index.html',
       minify: {
         removeComments: isDev ? false : true,
         collapseWhitespace: true,
