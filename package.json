@@ -1,0 +1,26 @@
+{
+  "name": "webpack-dev",
+  "version": "1.0.0",
+  "description": "webpack项目开发模板生成",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "wdev": "./bin/wdev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tangsj/webpack-dev.git"
+  },
+  "author": "tangsj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tangsj/webpack-dev/issues"
+  },
+  "homepage": "https://github.com/tangsj/webpack-dev#readme",
+  "dependencies": {
+    "download-git-repo": "^1.0.1",
+    "ora": "^1.3.0"
+  }
+}

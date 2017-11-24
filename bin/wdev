@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const ora = require('ora');
+const download = require('download-git-repo');
+
+const path = process.argv[2];
+const exec = require('child_process').exec;
+
+// 指定项目下载保存目录
+if (!path) {
+  console.log('Error: 请指定项目保存目录。');
+  return;
+}
+
+const spinner = ora('Start: 开始下载模板');
+spinner.start();
+
+download('https://github.com:tangsj/webpack3-multipage-template#master', path, function (err) {
+  if (err) {
+    spinner.fail('End: 下载失败！');
+    spinner.fail(JSON.stringify(err));
+    return;
+  }
+
+  spinner.color = 'green';
+  spinner.succeed('End: 下载成功');
+  console.log(`Tip: 请执行 cd ${path}\n npm install\n npm run dev 启动项目！`);
+})
