@@ -1,10 +1,34 @@
 #!/usr/bin/env node
 
+/**
+ * 命令使用方式
+ * wdev init pc [path]
+ * wdev init mobile [path]
+ */
+
 const ora = require('ora');
 const download = require('download-git-repo');
 
-const path = process.argv[2];
+const branch = {
+  pc: 'master',
+  mobile: 'mobile',
+}
+
+const type = process.argv[2];
+const platform = process.argv[3];
+const path = process.argv[4] || '.';
+
 const exec = require('child_process').exec;
+
+if (['init', 'update'].indexOf(type) == -1) {
+  console.log('wdev [init | update] [options]');
+  return;
+}
+
+if (!branch[platform]) {
+  console.log('模板名称错误，请指定[pc | mobile]');
+  return;
+}
 
 // 指定项目下载保存目录
 if (!path) {
@@ -12,17 +36,18 @@ if (!path) {
   return;
 }
 
-const spinner = ora('Start: 开始下载模板');
+const spinner = ora(`Start: 开始下载模板${platform}`);
 spinner.start();
 
-download('https://github.com:tangsj/webpack3-multipage-template#master', path, function (err) {
+download(`https://github.com:tangsj/webpack3-multipage-template#${branch[platform]}`, path, function (err) {
   if (err) {
     spinner.fail('End: 下载失败！');
     spinner.fail(JSON.stringify(err));
     return;
   }
 
-  spinner.color = 'green';
   spinner.succeed('End: 下载成功');
-  console.log(`Tip: 请执行 cd ${path}\n npm install\n npm run dev 启动项目！`);
+  spinner.color = 'green';
+  
+  console.log(`Tip: 请执行 cd ${path} -  npm install - npm run dev 启动项目！`);
 })
