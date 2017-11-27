@@ -8,7 +8,7 @@
 
 mkdir project
 
-wdev ./project/
+wdev init [pc|mobile] ./project/
 
 cd ./project/
 
