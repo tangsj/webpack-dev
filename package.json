@@ -1,6 +1,6 @@
 {
   "name": "webpack-dev",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "webpack项目开发模板生成",
   "main": "index.js",
   "scripts": {

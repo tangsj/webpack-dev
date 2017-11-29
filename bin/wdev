@@ -12,6 +12,7 @@ const download = require('download-git-repo');
 const branch = {
   pc: 'master',
   mobile: 'mobile',
+  mapp: 'mapp',
 }
 
 const type = process.argv[2];
@@ -26,7 +27,10 @@ if (['init'].indexOf(type) == -1) {
 }
 
 if (!branch[platform]) {
-  console.log('模板名称错误，请指定[pc | mobile]');
+  console.log('模板名称错误，请指定[pc | mobile | mapp]');
+  console.log('pc: pc多页面模板');
+  console.log('mobile: 手机多页面模板');
+  console.log('mapp: 手机单页面模板');
   return;
 }
 
