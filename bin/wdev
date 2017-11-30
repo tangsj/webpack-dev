@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * 命令使用方式
- * wdev init pc [path]
- * wdev init mobile [path]
+ * 项目初始化工具
+ * @author tangsj
  */
-
+const program = require('commander');
 const ora = require('ora');
 const download = require('download-git-repo');
 
@@ -15,43 +14,73 @@ const branch = {
   mapp: 'mapp',
 }
 
-const type = process.argv[2];
-const platform = process.argv[3];
-const path = process.argv[4] || '.';
+let name, path;
 
-const exec = require('child_process').exec;
+program
+  .version('1.0.0')
+  .usage('init|i [name] [path]')
+  .description('根据模板名称生成一个项目到指定目录')
+  .on('--help', function () {
+  console.log();
+  console.log('  参数说明: ');
+  console.log('    <name>: 模板名称使用以下任意一个值 [pc|mobile|mapp]');
+  console.log();
+  console.log('      pc: 初始化一个PC多页面项目');
+  console.log();
+  console.log('      mobile: 初始化一个手机多页面项目');
+  console.log();
+  console.log('      mapp: 初始化一个手机单页面项目');
+  console.log();
+  console.log('    <path>: 项目初始化目录地址');
+});
 
-if (['init'].indexOf(type) == -1) {
-  console.log('wdev init [options]');
-  return;
+/**
+ * Help.
+ */
+!function help() {
+  program.parse(process.argv);
+  if (program.args.length < 3) {
+    return program.help();
+  }
+}();
+
+program
+  //子命令
+  .command('init <name> <path>')
+  //短命令 - 简写方式
+  .alias('i')
+  //注册一个callback函数
+  .action(function (n, p, options) {
+    name = n;
+    path = p;
+  });
+
+program.parse(process.argv);
+
+if (!branch[name]) {
+  console.log('  项目模板名称错误！');
+  program.help();
 }
 
-if (!branch[platform]) {
-  console.log('模板名称错误，请指定[pc | mobile | mapp]');
-  console.log('pc: pc多页面模板');
-  console.log('mobile: 手机多页面模板');
-  console.log('mapp: 手机单页面模板');
-  return;
-}
-
-// 指定项目下载保存目录
 if (!path) {
-  console.log('Error: 请指定项目保存目录。');
-  return;
+  console.log('  项目初始化路径未指定！');
+  program.help();
 }
 
-const spinner = ora(`Start: 开始下载模板${platform}`);
+// 判断initPath 是否存在 自动创建
+// TODO
+const spinner = ora(`Start: 开始下载模板${name}`);
 spinner.start();
 
-download(`https://github.com:tangsj/webpack3-multipage-template#${branch[platform]}`, path, function (err) {
+download(`https://github.com:tangsj/webpack3-multipage-template#${branch[name]}`, path, function (err) {
   if (err) {
-    spinner.fail('End: 下载失败！');
+    spinner.fail(' End: 下载失败！');
     spinner.fail(JSON.stringify(err));
     return;
   }
 
-  spinner.succeed('End: 下载成功');
+  spinner.succeed(' End: 下载成功');
   spinner.color = 'green';
-  
-  console.log(`Tip: 请执行 cd ${path} -  npm install - npm run dev 启动项目！`);
+
+  console.log(`   Tip: 请执行 cd ${path} / npm install / npm run dev 启动项目！`);
 })
