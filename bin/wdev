@@ -12,6 +12,7 @@ const branch = {
   pc: 'master',
   mobile: 'mobile',
   mapp: 'mapp',
+  mapp4: 'mapp4',
 }
 
 let name, path;
@@ -21,18 +22,18 @@ program
   .usage('init|i [name] [path]')
   .description('根据模板名称生成一个项目到指定目录')
   .on('--help', function () {
-  console.log();
-  console.log('  参数说明: ');
-  console.log('    <name>: 模板名称使用以下任意一个值 [pc|mobile|mapp]');
-  console.log();
-  console.log('      pc: 初始化一个PC多页面项目');
-  console.log();
-  console.log('      mobile: 初始化一个手机多页面项目');
-  console.log();
-  console.log('      mapp: 初始化一个手机单页面项目');
-  console.log();
-  console.log('    <path>: 项目初始化目录地址');
-});
+    console.log();
+    console.log('  参数说明: ');
+    console.log('    <name>: 模板名称使用以下任意一个值 [pc|mobile|mapp|mapp4]');
+    console.log();
+    console.log('      pc: 初始化一个PC多页面项目');
+    console.log();
+    console.log('      mobile: 初始化一个手机多页面项目');
+    console.log();
+    console.log('      mapp: 初始化一个手机单页面项目');
+    console.log();
+    console.log('    <path>: 项目初始化目录地址');
+  });
 
 /**
  * Help.
